@@ -1,4 +1,4 @@
-export const cart = (state, action) => {
+export const cart = (state = { items: [] }, action) => {
   switch (action.type) {
     case 'addLineItem':
       return {
