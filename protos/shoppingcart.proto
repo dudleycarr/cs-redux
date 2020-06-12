@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+package com.example.shoppingcart;
+
+message Key {
+  string user_id = 1;
+}
+
+message AddLineItem {
+    string product_id = 1;
+    string name = 2;
+    int32 quantity = 3;
+}
+
+message RemoveLineItem {
+    string product_id = 1;
+}
+
+message LineItem {
+    string product_id = 1;
+    string name = 2;
+    int32 quantity = 3;
+}
+
+message Action {
+  Key key = 1;
+  oneof actiontype {
+    AddLineItem addLineItem = 2;
+    RemoveLineItem removeLineItem = 3;
+  }
+}
+
+message Cart {
+    repeated LineItem items = 1;
+}
+
+service ShoppingCart {
+    rpc Dispatch(Action) returns (google.protobuf.Empty) {}
+    rpc GetState(Key) returns (Cart) {}
+}
